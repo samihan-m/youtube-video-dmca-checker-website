@@ -87,7 +87,9 @@
 <body>
     <div id="header" class="text-center">
         <h1>YouTube Video DMCA Checker</h1>
-        <h2>Enter a YouTube Video Link To Test It</h2>
+        <h2>
+            Enter a YouTube Video Link To Test It
+        </h2>
         <h3 id="tutorial">
             If the video has any music that puts you in great risk of a DMCA takedown, a big <span class="error">red</span> warning message will appear.
             <br>
@@ -200,8 +202,13 @@
                 else {
                     //Perform DMCA check and then either redirect or tell user to pick a different video.
                     checkForClaimedMusic(youtubeURL, function determineRedirect(videoDetails) {
-                        //Read data from the returned details object
+                        //First, check if the process broke.
+                        if(videoDetails.broken) {
+                            //If broken, then alert the user that the website broke and that they shouldn't use it.
+                            alert("WARNING! THE SITE'S DMCA CONFIRMATION PROGRAM HAS BROKEN! DO NOT TRUST WHAT YOU SEE ON THIS PAGE! TRY AGAIN LATER!")
+                        }
 
+                        //Read data from the returned details object
                         title = videoDetails.title;
                         hasDMCA = videoDetails.hasDMCA;
                         thumbnail_url = videoDetails.thumbnail_url;
