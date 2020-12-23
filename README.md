@@ -19,5 +19,5 @@ So, the website checks the YouTube page for that header, and if it is present, t
 
 <b>Other Information</b>
  
-Uses NodeJS. Whenever a YouTube URL is searched by the user, the website creates a HTTP request to read the source-view of the YouTube page with that URL. It scans for title, thumbnail, and the "Music in this video:" header in the video's description.
+Uses NodeJS. Whenever a YouTube URL is searched by the user, the website creates a HTTP request to read the source-view of the YouTube page with that URL. It scans the page for the needed data to perform the DMCA checks.
 
