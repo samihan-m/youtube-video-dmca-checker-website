@@ -2,6 +2,8 @@
 <b>Try it out free here!</b>
 https://dmcachecker.com
 
+If that link doesn't work, try this one: https://dmca-checker.herokuapp.com/
+
  A free-to-use website that checks if a given video is marked by YouTube as containing claimed music, which could lead to a DMCA takedown if played during a livestream on a platform like Twitch.
  
  <b>The Method the Site Uses To Confirm/Deny DMCA Music</b>
