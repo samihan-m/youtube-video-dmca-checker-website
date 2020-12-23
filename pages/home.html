@@ -72,6 +72,9 @@
             padding-top: 5px;
             padding-bottom: 5px;
         }
+        h2, h3 {
+            font-size: 100%;
+        }
     </style>
 </head>
 <body>
@@ -79,7 +82,7 @@
         <h1>YouTube Video DMCA Checker</h1>
         <h2>Enter a YouTube Video Link To Test It</h2>
         <h3 id="tutorial">
-            If the video has any DMCA, a big <span class="error">red</span> warning message will appear.
+            If the video has any music that could get you hit by a DMCA takedown, a big <span class="error">red</span> warning message will appear.
             <br>
             If the video is safe, a big <span class="success">green</span> success message will appear.
             <br>
@@ -91,6 +94,8 @@
         <label>YouTube URL: (Video)</label>
         <div id="search-bar" class="text-center">
             <span id="youtubeURL" class="input" role="textbox" contenteditable="true">https://www.youtube.com/watch?v=pXXkDe2XvHU</span>
+            <br>
+            <br>
             <button id="search">Search  <i class="fa fa-search"></i></button>
         </div>
     </div>
@@ -100,11 +105,11 @@
             That link isn't a valid YouTube link. Try a different link.
         </div>
         <div id="contains-dmca-error" class="hidden error">
-            This video contains DMCA music.
+            This video contains music that will make you a target of a DMCA takedown if played during a live stream.
         </div>
         <div id="no-dmca" class="hidden success">
-            This video is DMCA free!
-            (YouTube has identified no DMCA-claimed music in this video)
+            This video is safe!
+            (YouTube has identified no strictly-enforced copyrighted music in this video)
             <br>
             Still, be careful. More information here: <a href=https://docs.google.com/spreadsheets/d/12_4JE6yvV4HQ21qA6YJp4Elu_Kz8x0LZiVRMkA3ZIzE/edit#gid=0>DMCA Information Guide</a>
         </div>
