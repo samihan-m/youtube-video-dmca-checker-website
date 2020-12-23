@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        //Change the embed URL based on the URL variable, after validating it.
+        window.onload = function() {
+            let urlParams = new URLSearchParams(window.location.search)
+            let videoID = urlParams.get("v");
+            let exampleID = RegExp("([A-Za-z0-9_\-]{11})")
+            //Only change the source once validated.
+            if(exampleID.test(videoID)) {
+                console.log("good url :)")
+                document.getElementById("youtube-embed").src = "https://www.youtube.com/embed/" + videoID + "?&autoplay=1";
+                //Maybe set a label that says "Invalid URL" to hidden.
+            }
+            else {
+                console.log("bad url :)")
+                //Maybe set a label that says "Invalid URL" to visible.
+            }
+        }
+    </script>
+    <style>
+        /*Make the default colors for the site: background black, text white; and slightly bigger text.*/
+        body {
+            font-size: 2em;
+            background-color: black;
+            color: white;
+        }
+        /*Make text centered.*/
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="iframes" class="text-center">
+        <iframe id="dmca-checker-home-page" src="/"  frameborder="0"  width="1198" height="400"></iframe>
+        <iframe id="youtube-embed" width="1198" height="674" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</body>

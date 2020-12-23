@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src ="dmcaChecker.js"></script>
+    <script type="text/javascript" src ="htmlUtilities.js"></script>
+    <style>
+        /*Make the default colors for the site: background black, text white; and slightly bigger text.*/
+        body {
+            font-size: 1.6em;
+            background-color: black;
+            color: white;
+        }
+        /*Make something float in the dead center of the page.*/
+        .float-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        /*Make text centered.*/
+        .text-center {
+            text-align: center;
+        }
+        /*Prevents the element from appearing.*/
+        .hidden {
+            display: none;
+        }
+        /*Makes text red.*/
+        .error {
+            color: red;
+        }
+        /*Makes text green.*/
+        .success {
+            color: lime;
+        }
+        /*Change the font for the header div.*/
+        #header {
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+        /*Make the children of the search-bar div (the input + the button) bigger*/
+        #search-bar * {
+            font-size: 0.8em;
+        }
+        /*Make the youtubeURL input horizontally expandable up to a limit, as well as: background color black, text color white */
+        .input {
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2em;
+            background-color: slategray;
+            color: black;
+            padding: 4px 1em;
+        }
+        /*Make the youtubeURL span have white text by default*/
+        #youtubeURL {
+            color: white;
+        }
+        /*Make all links white and bigger.*/
+        a, a:visited {
+            color: white;
+            font-size: 1.5em;
+        }
+        /*Make active links purple*/
+        a:active {
+            color: purple;
+        }
+    </style>
+</head>
+<body>
+    <div id="header" class="text-center">
+        <h1>YouTube Video DMCA Checker</h1>
+        <h2>Enter a YouTube Video Link To Test It</h2>
+        <h3 id="tutorial">
+            If the video has any DMCA, a big <span class="error">red</span> warning message will appear.
+            <br>
+            If the video is safe, a big <span class="success">green</span> success message will appear.
+            <br>
+            Try it out with this test link.
+            -Samihan
+        </h3>
+    </div>
+    <div id="search-menu" class="text-center">
+        <label>YouTube URL: (Video)</label>
+        <div id="search-bar" class="text-center">
+            <span id="youtubeURL" class="input" role="textbox" contenteditable="true">https://www.youtube.com/watch?v=pXXkDe2XvHU</span>
+            <button id="search">Search  <i class="fa fa-search"></i></button>
+        </div>
+    </div>
+    <br>
+    <div id="feedback-display" class="text-center">
+        <div id="bad-link-error" class="hidden error">
+            That link isn't a valid YouTube link. Try a different link.
+        </div>
+        <div id="contains-dmca-error" class="hidden error">
+            This video contains DMCA music.
+        </div>
+        <div id="no-dmca" class="hidden success">
+            This video is DMCA free!
+            (YouTube has identified no DMCA-claimed music in this video)
+        </div>
+    </div>
+    <br>
+    <div id="video-details-display" class="text-center"> 
+        <div id="title-display" class="hidden">
+            <span id="title"></span>
+        </div>
+        <br>
+        <div id="thumbnail-display" class="hidden">
+            <img id="thumbnail" src="" alt="thumbnail" href="">
+        </div>
+        <a id="video-link" class="hidden">Click Here To Watch This Video</a>
+    </div>
+    <script>
+        $(() => {
+            //Add plain text paste functionality to the contenteditable span.
+            document.getElementById("youtubeURL").addEventListener('paste', plainTextPaste)
+
+            $("#search").click(() => {
+                //Read input.
+                var youtubeURL = document.getElementById("youtubeURL").innerText;
+                //Variable used for flagging a valid input.
+                let badURL = true;
+
+                //Get the bad link error message for hiding/showing upon link validation.
+                let badLinkErrorMessage = document.getElementById("bad-link-error");
+                //Get the contains DMCA error message for hiding/showing upon link validation.
+                let containsDMCAErrorMessage = document.getElementById("contains-dmca-error");
+                //Get the no DMCA success message for hiding/showing upon link validation.
+                let noDMCASuccessMessage = document.getElementById("no-dmca");
+                //Reset the currently displayed error messages by hiding them.
+                    //Hide the bad link error message.
+                    badLinkErrorMessage.classList.add("hidden");
+                    //Hide the contains DMCA error message.
+                    containsDMCAErrorMessage.classList.add("hidden");
+                    //Hide the no DMCA success message.
+                    noDMCASuccessMessage.classList.add("hidden");
+
+                //Get the element that has the title of the video.
+                let videoTitleDisplay = document.getElementById("title-display");
+                //Get the element that has the thumbnail of the video.
+                let videoThumbnailDisplay = document.getElementById("thumbnail-display");
+                //Get the element that has the link to the video.
+                let videoLink = document.getElementById("video-link");
+                //Reset the video detail display.
+                    //Hide the video title display.
+                    videoTitleDisplay.classList.add("hidden");
+                    //Hide the video thumbnail display.
+                    videoThumbnailDisplay.classList.add("hidden");
+                    //Hide the video link.
+                    videoLink.classList.add('hidden');
+
+                //Check that the URL directs to YouTube.
+                if(youtubeURL.length >= 11) {
+
+                    //Get videoID from the user-inputted YouTube URL
+                    let urlRegExp = RegExp(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/);
+                    let match = youtubeURL.match(urlRegExp);
+                    //Sometimes if the user enters weird characters, the match throws an error. Catch it, and assume that means the entry was bad.
+                    try {
+                        var videoID = match[1];
+                        let videoIDRegExp = RegExp("([A-Za-z0-9_\-]{11})");
+                        if(videoIDRegExp.test(videoID)) {
+                            badURL = false;
+                        }
+                    }
+                    catch {
+                        //User entered weird characters. (Probably HTML.) It's no big deal. Just continue on.
+                        //badURL is assumed to be true anyway, so the bad link error will print.
+                    }
+                }
+
+                //Input is not valid. Tell user.
+                if(badURL) {
+                    //Show the bad link error message.
+                    badLinkErrorMessage.classList.remove("hidden");
+                }
+                //Input is valid. Check if video is DMCA free.
+                else {
+                    //Perform DMCA check and then either redirect or tell user to pick a different video.
+                    checkForClaimedMusic(youtubeURL, function determineRedirect(videoDetails) {
+                        //Read data from the returned details object
+
+                        title = videoDetails.title;
+                        hasDMCA = videoDetails.hasDMCA;
+                        thumbnail_url = videoDetails.thumbnail_url;
+
+                        //Cleaning title for display.
+                        title = decodeEntities(title);
+
+                        //Update the title and thumbnail displays.
+                        document.getElementById("title").textContent = title;
+                        document.getElementById("thumbnail").src = thumbnail_url;
+                        //Update the link to the YouTube video.
+                        document.getElementById("video-link").href = youtubeURL;
+
+                        //Show the video details.
+                        videoTitleDisplay.classList.remove("hidden");
+                        videoThumbnailDisplay.classList.remove("hidden");
+                        videoLink.classList.remove('hidden');
+
+                        //The video contains DMCA music. Don't redirect.
+                        if(hasDMCA) {
+                            //Show the contains DMCA error message.
+                            containsDMCAErrorMessage.classList.remove("hidden");
+                        }
+                        //The video is safe. Redirect.
+                        else {
+                            //Redirecting to the watch page.
+                            /*
+                            let redirect_link = "/watch?v=" + videoID;
+                            window.location.href = redirect_link;
+                            */
+
+                           //Actually, let's not redirect. Just tell the user that the video is safe.
+                           noDMCASuccessMessage.classList.remove("hidden");
+
+                           //The user used the program correctly. Hide the tutorial.
+                           document.getElementById("tutorial").classList.add("hidden");
+                        }
+                    });
+                }
+            })
+
+            //This makes it so that if I press ENTER in the search box it acts as if it clicked the send button.
+            $("#youtubeURL").keypress(function(event) {
+                if(event.keyCode == 13 || event.which == 13) {
+                    //This triggers the send function
+                    $("#search").click();
+                    //This prevents the ENTER being turned into a newline
+                    event.preventDefault();
+                }
+            })
+        })
+    </script>
+</body>
