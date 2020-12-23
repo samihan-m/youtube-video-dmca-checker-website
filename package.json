@@ -4,7 +4,7 @@
   "description": "Prevents YouTube from playing videos with claimed music.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "samihan",
   "license": "ISC",
