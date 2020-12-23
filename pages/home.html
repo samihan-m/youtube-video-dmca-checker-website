@@ -72,8 +72,15 @@
             padding-top: 5px;
             padding-bottom: 5px;
         }
+        /*Make these headers smaller.*/
         h2, h3 {
             font-size: 100%;
+        }
+        /*Boldens, underlines, and slightly embiggens text.*/
+        .emphasized {
+            font-weight:bold;
+            text-decoration: underline;
+            font-size: 1.2em;
         }
     </style>
 </head>
@@ -105,11 +112,12 @@
             That link isn't a valid YouTube link. Try a different link.
         </div>
         <div id="contains-dmca-error" class="hidden error">
-            This video contains music that will make you a target of a DMCA takedown if played during a live stream.
+            This video contains music that will make you a <span class="emphasized">very likely</span> target of a DMCA takedown if played during a live stream. AVOID THIS!
+            <br>
+            More information here: <a href=https://docs.google.com/spreadsheets/d/12_4JE6yvV4HQ21qA6YJp4Elu_Kz8x0LZiVRMkA3ZIzE/edit#gid=0>DMCA Information Guide</a>
         </div>
         <div id="no-dmca" class="hidden success">
-            This video is safe!
-            (YouTube has identified no strictly-enforced copyrighted music in this video)
+            This video looks safe! YouTube has identified no <span class="emphasized">strictly-enforced</span> copyrighted music in this video. The chance you will be hit by a DMCA takedown is AT MOST around 1%.
             <br>
             Still, be careful. More information here: <a href=https://docs.google.com/spreadsheets/d/12_4JE6yvV4HQ21qA6YJp4Elu_Kz8x0LZiVRMkA3ZIzE/edit#gid=0>DMCA Information Guide</a>
         </div>
