@@ -7,7 +7,7 @@
     <style>
         /*Make the default colors for the site: background black, text white; and slightly bigger text.*/
         body {
-            font-size: 1.6em;
+            font-size: 1.5em;
             background-color: black;
             color: white;
         }
@@ -59,12 +59,18 @@
         }
         /*Make all links white and bigger.*/
         a, a:visited {
-            color: white;
+            color: cyan;
             font-size: 1.5em;
         }
         /*Make active links purple*/
         a:active {
             color: purple;
+        }
+        /*Adding a border around the video display panel*/
+        #video-details-display {
+            border: 2px solid white;
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
     </style>
 </head>
@@ -99,6 +105,8 @@
         <div id="no-dmca" class="hidden success">
             This video is DMCA free!
             (YouTube has identified no DMCA-claimed music in this video)
+            <br>
+            Still, be careful. More information here: <a href=https://docs.google.com/spreadsheets/d/12_4JE6yvV4HQ21qA6YJp4Elu_Kz8x0LZiVRMkA3ZIzE/edit#gid=0>DMCA Information Guide</a>
         </div>
     </div>
     <br>
@@ -106,7 +114,6 @@
         <div id="title-display" class="hidden">
             <span id="title"></span>
         </div>
-        <br>
         <div id="thumbnail-display" class="hidden">
             <img id="thumbnail" src="" alt="thumbnail" href="">
         </div>
@@ -207,8 +214,10 @@
                         }
                         //The video is safe. Redirect.
                         else {
-                            //Redirecting to the watch page.
+                            //Disabled this because I would rather people watch videos directly from YouTube.
+                            //I am not making a substitute viewing platform. Just a tool to check quickly if something contains DMCA.
                             /*
+                            //Redirecting to the watch page.   
                             let redirect_link = "/watch?v=" + videoID;
                             window.location.href = redirect_link;
                             */
