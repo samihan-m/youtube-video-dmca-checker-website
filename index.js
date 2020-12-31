@@ -19,9 +19,15 @@ app.use(express.static('.', {
 //Not using this anymore because I am not routing based on the videoID anymore.
 //app.set('case sensitive routing', true);
 
+var pageVisitCount = 0;
+
 //The home page.
 app.get('/', async (request, response) => {
     //console.log("HOME PAGE");
+
+    //Counting the number of visits
+    pageVisitCount++;
+    console.log(`Visit count: ${pageVisitCount}`);
 
     //Show the main page.
     response.sendFile('home.html', {root: page_root});
@@ -72,6 +78,9 @@ app.get('/scrape', async (request, response) => {
 //Catch all other URLs and redirect to main page.
 app.get('*', async (request, response) => {
     //console.log("CATCH-ALL REDIRECT")
+
+    //Need to subtract visit count by 1 or else it procs the pageVisitCount++ in the app.get('/')
+    pageVisitCount--;
 
     //Redirect to the main page.
     response.redirect(307, '/')
