@@ -1,5 +1,85 @@
-//Check for a <yt-formatted-string> with content "Music in this video"
-function checkForClaimedMusic(URL, callback) {
+async function checkForClaimedMusic(URL, callback) {
+  //YouTube API doesn't actually tell you anything about copyright. The licensedContent boolean doesn't mean what I thought it did. The old version is still the useful version.
+  /*
+  //The new version which uses YouTube's API and checks for licensedContent boolean. This check is accurate for auto-generated videos as well.
+
+  //Setting API key.
+  var apiKey = "AIzaSyCqJpNU68t5Hu7EXO5bV0S5YcH4_HVkNig";
+
+  //Setting the response object to null as default.
+  var youtubeResponse = null;
+
+  //Ripped Google's sample API code
+  function loadClient() {
+    gapi.client.setApiKey(apiKey);
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.youtube.videos.list({
+      "part": [
+        "snippet,contentDetails,statistics"
+      ],
+      "id": [
+        videoID
+      ]
+    })
+    .then(function(response) {
+            //Handle the results here (response.result has the parsed body).
+            //Get the first video in the result.items array (an array of all videos with the given videoID - that means just 1 video will be returned, and it's the one we need)
+            youtubeResponse = response.result.items[0];
+            console.log(response.result);
+          },
+          function(err) {
+              console.error("Execute error", err); 
+          });
+  }
+
+  //Prepare api object with auth key
+  await loadClient();
+  //Perform api call
+  await execute();
+  //youtubeResponse now holds the response.
+
+  //Get information from the response.
+  try {
+    //A variable that is passed to the web browser, stating if this process broke or not.
+    var broken = false;
+
+    //First, check if a valid response returned.
+    if(youtubeResponse == null) {
+      //Bad response. Throw an error to alert user the check broke.
+      throw "Bad response. Not your fault, YouTube's fault :)";
+    }
+
+    //Grab video details from response object.
+    var videoDetails = youtubeResponse.snippet;
+    var title = videoDetails.title;
+    var thumbnailURL = videoDetails.thumbnails.standard.url;
+
+    //Check if video has licensed music.
+    var hasLicensedContent =  youtubeResponse.contentDetails.licensedContent;
+  }
+  catch (e){
+    console.log("The DMCA check process has broken.")
+    //Log the error
+    console.log(e);
+    //Set the broken variable to true. This is checked by the html page to see if the data should be trusted.
+    broken = true;
+  }
+
+  //Output message
+  //console.log("Has DMCA?", hasDMCA);
+
+  videoDetails = {'hasDMCA': hasLicensedContent, 'title': title, 'thumbnail_url': thumbnailURL, 'broken': broken};
+
+  callback(videoDetails);
+  */
+
+  //The old version which scanned the raw html for indicators
+  //Check for a <yt-formatted-string> with content "Music in this video"
   //Get the page data from the URL.
   $.get(`/scrape?url=${URL}`, function(page) { 
       //Assumes there is DMCA music by default --> plays it safe.

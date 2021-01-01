@@ -75,6 +75,14 @@ app.get('/scrape', async (request, response) => {
     }
 });
 
+
+//testing example
+app.get('/example', async (request, response) => {
+
+    response.sendFile('example.html', {root: page_root});
+})
+
+
 //Catch all other URLs and redirect to main page.
 app.get('*', async (request, response) => {
     //console.log("CATCH-ALL REDIRECT")

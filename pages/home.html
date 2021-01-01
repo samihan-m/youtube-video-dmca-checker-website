@@ -2,6 +2,11 @@
 <head>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        //Loading client. This will throw an error because I am not passing a client_id but it works perfectly anyway so that's fine.
+        gapi.load("client:auth2", function() {});
+    </script>
     <script type="text/javascript" src ="dmcaChecker.js"></script>
     <script type="text/javascript" src ="htmlUtilities.js"></script>
     <script data-ad-client="ca-pub-1733738058049678" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
