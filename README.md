@@ -1,6 +1,8 @@
 # youtube-video-dmca-checker-website
 <b>Try it out free here!</b>
-https://dmcachecker.com
+http://dmcachecker.com
+
+(Make sure that your browser doesn't try to upgrade the connection to https, because the site isn't SSL-certified. Try typing in www.dmcachecker.com to be safe :))
 
 If that link doesn't work, try this one: https://dmca-checker.herokuapp.com/
 
