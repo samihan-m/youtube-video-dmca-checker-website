@@ -92,7 +92,8 @@ async function checkForClaimedMusic(URL, callback) {
       var thumbnail_url = "";
 
       //The "Music in this video:" box in the description. This is indicative of a claimed song in the video. Avoid this.
-      var dmcaIndicator = '{"metadataRowHeaderRenderer":{"content":{"simpleText":"Music in this video"},"hasDividerLine":true}}';
+      //var dmcaIndicator = '{"metadataRowHeaderRenderer":{"content":{"simpleText":"Music in this video"},"hasDividerLine":true}}';
+      var dmcaIndicator = '":"Music in this video"'
 
       try {
         //Find where the title is based on the location of the indicators
