@@ -58,6 +58,9 @@
             background-color: slategray;
             color: black;
             padding: 4px 1em;
+            /*To solve the span not being editable when empty*/
+            min-width: 30px;
+            display: inline-block;
         }
         /*Make the youtubeURL span have white text by default*/
         #youtubeURL {
@@ -66,7 +69,7 @@
         /*Make all links white and bigger.*/
         a, a:visited {
             color: cyan;
-            font-size: 1.5em;
+            font-size: 1.4em;
         }
         /*Make active links purple*/
         a:active {
@@ -98,7 +101,8 @@
     <div id="header" class="text-center">
         <h1>YouTube Video DMCA Checker</h1>
         <h2>
-            Enter a YouTube Video Link To Test It
+            Find an explanation/tutorial for this tool <a class="credit" href="https://youtu.be/Bft5_6iiFig">here.</a>
+            by <a class="credit" href="https://github.com/samihan-m">samihan m</a>
         </h2>
         <h3 id="tutorial">
             If the video has any music that puts you in great risk of a DMCA takedown, a big <span class="error">red</span> warning message will appear.
@@ -106,16 +110,15 @@
             If the video is more-or-less safe, a big <span class="success">green</span> success message will appear.
             <br>
             Try it out with this test link.
-            by <a class="credit" href="https://github.com/samihan-m">samihan m</a>
         </h3>
     </div>
     <div id="search-menu" class="text-center">
-        <label>YouTube URL: (Video)</label>
+        <label>YouTube URL: (Video Link Goes Here)</label>
         <div id="search-bar" class="text-center">
             <span id="youtubeURL" class="input" role="textbox" contenteditable="true">https://www.youtube.com/watch?v=i1jkj1l-mlM</span>
             <br>
             <br>
-            <button id="search">Search  <i class="fa fa-search"></i></button>
+            <button id="search">Check  <i class="fa fa-search"></i></button>
         </div>
     </div>
     <br>
